@@ -3,6 +3,7 @@ package Clases;
 import java.util.Objects;
 
 public class Persona {
+    private static final int LONGITUD_TELEFONO=9;
     private String nombre;
     private String apellidos;
     private String dni;
@@ -16,11 +17,6 @@ public class Persona {
         this.direccion = direccion;
         this.numTelefono = numTelefono;
     }
-    public boolean validarTlfn()
-    {
-        return numTelefono.length()==9;
-    }
-    public boolean validar(){ return new DniValidator(dni).validar();}
     public String getNombre() {
         return nombre;
     }
@@ -51,10 +47,32 @@ public class Persona {
     public void setNumTelefono(String numTelefono) {
         this.numTelefono = numTelefono;
     }
+
+    /**
+     * Metodo para validar que el numero de telefono tenga una longitud dada
+     * @return
+     */
+    public boolean validarTlfn()
+    {
+        return numTelefono.length()==LONGITUD_TELEFONO;
+    }
+
+    /**
+     * metodo para comprobar la validez del dni en funcion de los criterios que determina la cclase DniValidator
+     * @return
+     */
+    public boolean validar(){ return new DniValidator(dni).validar();}
+
     @Override
     public String toString() {
         return nombre+","+ apellidos+","+ dni+","+direccion+","+numTelefono;
     }
+
+    /**
+     * Determina si el objeto persona es igual o no al que se le pasa por parametro
+     * El criterio de igualdad es el dni del objeto persona
+     * @param o (Object)
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

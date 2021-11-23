@@ -14,7 +14,7 @@ public class Main { public static void main(String[] args) {
     PersonaManager clients= new PersonaManager("Clientes");
     IndexManager indice= new IndexManager("Indice_clientes");
     IndexManager config= new IndexManager("config");
-    String ans="";
+    String ans;
     Scanner scan= new Scanner(System.in);
     boolean exit=false;
     while(!exit)

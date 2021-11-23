@@ -6,6 +6,10 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
+/**
+ * Esta clase imlementa las funcionalidades necesarias para la lectura y escriturade objetos de la clase persona
+ * directamente de un fichero binario con RandomAccessFile
+ */
 public class PersonaManager extends IndexManager{
     private static final int REG_SIZE=214;
     public PersonaManager(File file) {
@@ -33,16 +37,17 @@ public class PersonaManager extends IndexManager{
             e.printStackTrace();
         }
     }
-
     /**
-     * Metodo para facilitar la lectura de cadenas del fichero
+     * Metodo para facilitar la lectura de cadenas del fichero. Comienza a leer en la posción indicada y lee el primer
+     * string del registro
+     * Precondiciones: el fichero debe contener al menos un registro
+     * Poscondiciones: el método devuelve el primer atributo del registro
      * @param position
-     * @return
      */
     public String readFirst(long position)
     {
         try {
-            randomAccess.seek( position * REG_SIZE);
+            randomAccess.seek(position * REG_SIZE);
         } catch (IOException e) {
 //            e.printStackTrace();
             System.err.println("No se han encontrado mas registros");
@@ -54,16 +59,16 @@ public class PersonaManager extends IndexManager{
      * Precondiciones: el fichero debe contener al menos un registro de la clase Persona
      * Poscondiciones: ninguna
      * @param position
-     * @return persona
      */
     public Persona readPerson(long position)
     {
         return new Persona(this.readFirst(position), this.readString(), this.readString(), this.readString(), this.readString());
     }
     /**
-     * Pasa todos los datos del fichero a un fichero de texto
+     * Pasa todos los datos del fichero binario a un fichero de texto con la codificación indicada
      * Precondiciones: el fichero debe contener al menos un elemento de la clase Person
      * Poscondicones: se debe haber creado el fichero de texto y registrado los cambios en este
+     * @param charset
      */
     public void export(Charset charset)
     {

@@ -15,7 +15,7 @@ import java.io.RandomAccessFile;
  * he conseguido pulirlo para la entrega con la practica
  */
 public class IndexManager {
-    private final static int REG_SIZE=23;
+    private final static int REG_SIZE=19;
     private File file;
     protected RandomAccessFile randomAccess;
 
@@ -25,7 +25,8 @@ public class IndexManager {
      */
     public long lastIndex()
     {
-        return file.length()/REG_SIZE-1;
+        double a=file.length()/REG_SIZE;
+        return (long) a-1;
     }
 
     public IndexManager(File file) {
@@ -91,10 +92,11 @@ public class IndexManager {
      * @param position
      */
     public long readLong(long position) {
-        int num = 0;
+        long num = 0;
+        if(position>=lastIndex()) position=lastIndex();
         try {
             randomAccess.seek(position*REG_SIZE);
-            num = randomAccess.readInt();
+            num = randomAccess.readLong();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -128,14 +130,13 @@ public class IndexManager {
         boolean found=false;
         for(long i=0 ; i<file.length()/REG_SIZE && !found; i++)
         {
-            i= readLong(i*REG_SIZE);
+            i=readLong(REG_SIZE*i);
             id=readString();
             if(id.equals(dni))
             {
                 position=i;
                 found=true;
             }
-            i++;
         }
         return position;
     }

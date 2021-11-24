@@ -32,6 +32,6 @@ class PersonaManagerTest {
     @Test
     void exportTest() {
         escribirClientes();
-        CLIENTE.export(StandardCharsets.UTF_16);
+        CLIENTE.export(StandardCharsets.UTF_8);
     }
 }

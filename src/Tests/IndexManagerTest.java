@@ -27,7 +27,7 @@ class IndexManagerTest {
 
     @Test
     void testReadLong() {
-        assertEquals(0, FIN.readLong(0));
+        assertEquals(1, FIN.readLong(1));
     }
     @Test
     void testWriteReadRegistry()

@@ -1,6 +1,7 @@
 package Tests;
 
 import FileManager.IndexManager;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -9,8 +10,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class IndexManagerTest {
     IndexManager FIN;
 
+    @BeforeAll
+
+
     @BeforeEach
-    void setUp() {
+     void setUp() {
         FIN= new IndexManager("testFile");
         FIN.writeNumber(0);
         FIN.writeString("12345678R");

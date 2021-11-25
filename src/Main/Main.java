@@ -55,6 +55,18 @@ public class Main { public static void main(String[] args) {
     }
 }
 
+    /**
+     * Metodo que recibe un numero almacenado en el fichero que corresponde a uno de estos Charset
+     * El fichero guarda
+     * 1-> US_ASCII
+     * 2-> ISO_8859_1
+     * 3-> UTF_16
+     * 4-> UTF_16LE
+     * 5-> UTF_16BE
+     * 6-> UTF8
+     * @param config
+     * @return
+     */
     private static Charset getFileCharset(IndexManager config) {
         Charset cs;
         switch (config.readString())
@@ -105,7 +117,7 @@ public class Main { public static void main(String[] args) {
     private static String askTelefono(Scanner scan) {
         String telefono;
         Menu.printInfo(Menu.TELEFONO);
-        telefono = scan.next();//TODO VALIDAR TELEFONO
+        telefono = scan.next();
         return telefono;
     }
 

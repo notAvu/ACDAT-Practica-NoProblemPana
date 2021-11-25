@@ -38,7 +38,6 @@ public class Menu {
     {
         System.out.println("El valor introducido no es un numero de telefono valido");
     }
-
     public static void askConfig()
     {
         System.out.println("""

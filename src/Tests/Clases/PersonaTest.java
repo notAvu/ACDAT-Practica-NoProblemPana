@@ -20,9 +20,8 @@ class PersonaTest {
     void validarTlfnTestFalse() {
         assertFalse(pFail.validarTlfn());
     }
-
     @Test
     void testEqualsTest() {
-        assertTrue(pValid.equals(pValidCopy));
+        assertEquals(pValid, pValidCopy);
     }
 }

@@ -1,4 +1,4 @@
-package Tests;
+package Tests.FileManager;
 
 import Clases.Persona;
 import FileManager.PersonaManager;

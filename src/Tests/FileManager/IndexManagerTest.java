@@ -1,4 +1,4 @@
-package Tests;
+package Tests.FileManager;
 
 import FileManager.IndexManager;
 import org.junit.jupiter.api.BeforeAll;

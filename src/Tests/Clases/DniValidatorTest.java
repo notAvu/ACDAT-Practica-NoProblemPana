@@ -1,4 +1,4 @@
-package Tests;
+package Tests.Clases;
 
 import Clases.DniValidator;
 import org.junit.jupiter.api.Test;

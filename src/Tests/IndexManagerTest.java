@@ -10,9 +10,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class IndexManagerTest {
     IndexManager FIN;
 
-    @BeforeAll
-
-
     @BeforeEach
      void setUp() {
         FIN= new IndexManager("testFile");

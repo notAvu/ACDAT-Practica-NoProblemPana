@@ -25,7 +25,7 @@ public class Main { public static void main(String[] args) {
             case "1" -> addPersona(clients, scan, indice);
             case "2" -> {
                 String dni=askDni(scan);
-                if(indice.getPosition(dni)==-1) {
+                if(indice.getPosition(dni)==-1||!clients.readPerson(indice.getPosition(dni)).validar()) {
                     Menu.dniNotFound();
                 }else {
                     System.out.println(clients.readPerson(indice.getPosition(dni)).toString());
@@ -38,7 +38,7 @@ public class Main { public static void main(String[] args) {
                     Menu.dniNotFound();
                 }else
                 {
-                    //borrarClientes
+                    removePersona(clients.readPerson(indice.getPosition(dni)), clients, indice);
                 }
             }
             case "4" -> {
@@ -69,24 +69,28 @@ public class Main { public static void main(String[] args) {
      */
     private static Charset getFileCharset(String charsetChoice) {
         Charset encoding;
-        switch (charsetChoice)
-        {
-            case "1"-> encoding=StandardCharsets.US_ASCII;
+        switch (charsetChoice) {
+            case "1"->encoding=StandardCharsets.US_ASCII;
             case "2"->encoding=StandardCharsets.ISO_8859_1;
             case "3"->encoding=StandardCharsets.UTF_16;
             case "4"->encoding=StandardCharsets.UTF_16LE;
             case "5"->encoding=StandardCharsets.UTF_16BE;
-            default -> encoding=StandardCharsets.UTF_8;
+            default ->encoding=StandardCharsets.UTF_8;
         }
         return encoding;
     }
 
+    /**
+     * añade un registro con el dni indic
+     * @param manager
+     * @param dni
+     * @param position
+     */
     private static void addToIndex(IndexManager manager,String dni, long position)
     {
         manager.writeNumber(position);
         manager.writeString(dni);
     }
-
     private static void addPersona(PersonaManager clientManager, Scanner scan, IndexManager indexManager) {
         String nombre="";
         String apellido="";
@@ -101,11 +105,23 @@ public class Main { public static void main(String[] args) {
             direccion = askDireccion(scan);
         }
         Persona persona = new Persona(nombre, apellido, dni, direccion, telefono);
-        long nextPosition=0;
-        long numRegistros=indexManager.regCount();
-        if(numRegistros>0){nextPosition=numRegistros;}
+        long nextPosition = getNextPosition(indexManager);
         clientManager.writePerson(persona, nextPosition);
         addToIndex(indexManager, dni, nextPosition);
+    }
+
+    private static void removePersona(Persona objetivo,PersonaManager clientManager, IndexManager indexManager)
+    {
+        long targetPosition=indexManager.getPosition(objetivo.getDni());
+        Persona persona = new Persona(objetivo.getNombre(), objetivo.getApellidos(), "11111111U", objetivo.getDireccion(), objetivo.getNumTelefono());
+        clientManager.writePerson(persona, targetPosition);
+        addToIndex(indexManager, objetivo.getDni(), targetPosition);
+    }
+    private static long getNextPosition(IndexManager indexManager) {
+        long nextPosition=0;
+        long numRegistros= indexManager.regCount();
+        if(numRegistros>0){nextPosition=numRegistros;}
+        return nextPosition;
     }
 
     private static String askDireccion(Scanner scan) {

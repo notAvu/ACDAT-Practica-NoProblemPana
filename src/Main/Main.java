@@ -68,17 +68,17 @@ public class Main { public static void main(String[] args) {
      * @return
      */
     private static Charset getFileCharset(IndexManager config) {
-        Charset cs;
+        Charset encoding;
         switch (config.readString())
         {
-            case "1"-> cs=StandardCharsets.US_ASCII;
-            case "2"->cs=StandardCharsets.ISO_8859_1;
-            case "3"->cs=StandardCharsets.UTF_16;
-            case "4"->cs=StandardCharsets.UTF_16LE;
-            case "5"->cs=StandardCharsets.UTF_16BE;
-            default -> cs=StandardCharsets.UTF_8;
+            case "1"-> encoding=StandardCharsets.US_ASCII;
+            case "2"->encoding=StandardCharsets.ISO_8859_1;
+            case "3"->encoding=StandardCharsets.UTF_16;
+            case "4"->encoding=StandardCharsets.UTF_16LE;
+            case "5"->encoding=StandardCharsets.UTF_16BE;
+            default -> encoding=StandardCharsets.UTF_8;
         }
-        return cs;
+        return encoding;
     }
 
     private static void addToIndex(IndexManager manager,String dni, long position)
@@ -101,16 +101,18 @@ public class Main { public static void main(String[] args) {
             direccion = askDireccion(scan);
         }
         Persona persona = new Persona(nombre, apellido, dni, direccion, telefono);
-        long nextPosition= indexManager.lastIndex();
+        long nextPosition=0;
+        long numRegistros=indexManager.regCount();
+        if(numRegistros>0){nextPosition=numRegistros;}
         clientManager.writePerson(persona, nextPosition);
         addToIndex(indexManager, dni, nextPosition);
     }
-
 
     private static String askDireccion(Scanner scan) {
         String direccion;
         Menu.printInfo(Menu.DIRECCION);
         direccion = scan.next();
+        direccion +=scan.nextLine();
         return direccion;
     }
 

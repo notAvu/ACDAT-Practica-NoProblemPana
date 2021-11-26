@@ -49,7 +49,6 @@ public class PersonaManager extends IndexManager{
         try {
             randomAccess.seek(position * REG_SIZE);
         } catch (IOException e) {
-//            e.printStackTrace();
             System.err.println("No se han encontrado mas registros");
         }
         return readString();
@@ -62,7 +61,8 @@ public class PersonaManager extends IndexManager{
      */
     public Persona readPerson(long position)
     {
-        return new Persona(this.readFirst(position), this.readString(), this.readString(), this.readString(), this.readString());
+        Persona x=new Persona(this.readFirst(position), this.readString(), this.readString(), this.readString(), this.readString());
+        return x;
     }
     /**
      * Pasa todos los datos del fichero binario a un fichero de texto con la codificación indicada
@@ -75,7 +75,7 @@ public class PersonaManager extends IndexManager{
         int i=0;
         Persona aux;
         TextFileManager textFileManager=new TextFileManager(charset);
-        while(!readPerson(i).getDni().equals(""))//TODO revisar esta movida
+        while(!readPerson(i).getDni().equals(""))
         {
             aux=readPerson(i);
             if(aux.validar()) {

@@ -1,7 +1,6 @@
 package Tests.FileManager;
 
 import FileManager.IndexManager;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +22,7 @@ class IndexManagerTest {
 
     @Test
     void testLastIndex() {
-        assertEquals (2, FIN.lastIndex());
+        assertEquals (3, FIN.regCount());
     }
 
     @Test

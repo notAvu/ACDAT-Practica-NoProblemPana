@@ -28,10 +28,19 @@ class PersonaManagerTest {
         assertEquals(CLIENTE.readPerson(0), p1);
         assertEquals(CLIENTE.readPerson(2), p3);
     }
-
+//    @Test
+//    void exportTest() {
+//        escribirClientes();
+//        CLIENTE.export(StandardCharsets.UTF_8);
+//    }
     @Test
-    void exportTest() {
+    void exportTestUtf16() {
         escribirClientes();
-        CLIENTE.export(StandardCharsets.UTF_8);
+        CLIENTE.export(StandardCharsets.UTF_16);
     }
+//    @Test
+//    void exportTestAscii() {
+//        escribirClientes();
+//        CLIENTE.export(StandardCharsets.US_ASCII);
+//    }
 }

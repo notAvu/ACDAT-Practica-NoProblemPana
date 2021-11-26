@@ -41,7 +41,7 @@ public class TextFileManager {
     {
         iniWriter();
         try {
-            writer.write(client.toString());
+            writer.write(client.toString()+"|");
         } catch (IOException exception) {
             exception.printStackTrace();
         }

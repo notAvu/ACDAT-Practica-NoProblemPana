@@ -23,10 +23,10 @@ public class IndexManager {
      * Devuelve la posicion del ultimo registro disponible en el fichero
      * Precondiciones: el fichero debe contener unicamente registros del tipo de la clase
      */
-    public long lastIndex()
+    public long regCount()
     {
-        double a=file.length()/REG_SIZE;
-        return (long) a-1;
+        long a=file.length()/REG_SIZE;
+        return a;
     }
 
     public IndexManager(File file) {
@@ -93,7 +93,7 @@ public class IndexManager {
      */
     public long readLong(long position) {
         long num = 0;
-        if(position>=lastIndex()) position=lastIndex();
+        if(position>=regCount()) {position=regCount();}
         try {
             randomAccess.seek(position*REG_SIZE);
             num = randomAccess.readLong();
@@ -128,9 +128,9 @@ public class IndexManager {
         String id;
         long position=-1;
         boolean found=false;
-        for(long i=0 ; i<file.length()/REG_SIZE && !found; i++)
+        for(long i=0 ; i<regCount() && !found; i++)
         {
-            i=readLong(REG_SIZE*i);
+            i=readLong(i);
             id=readString();
             if(id.equals(dni))
             {

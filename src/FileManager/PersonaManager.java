@@ -61,8 +61,7 @@ public class PersonaManager extends IndexManager{
      */
     public Persona readPerson(long position)
     {
-        Persona x=new Persona(this.readFirst(position), this.readString(), this.readString(), this.readString(), this.readString());
-        return x;
+        return new Persona(this.readFirst(position), this.readString(), this.readString(), this.readString(), this.readString());
     }
     /**
      * Pasa todos los datos del fichero binario a un fichero de texto con la codificación indicada
@@ -73,15 +72,15 @@ public class PersonaManager extends IndexManager{
     public void export(Charset charset)
     {
         int i=0;
-        Persona aux;
+        Persona aux=readPerson(i);
         TextFileManager textFileManager=new TextFileManager(charset);
-        while(!readPerson(i).getDni().equals(""))
+        while(!aux.getDni().equals(""))
         {
-            aux=readPerson(i);
             if(aux.validar()) {
                 textFileManager.writeClient(aux);
             }
             i++;
+            aux=readPerson(i);
         }
     }
 }

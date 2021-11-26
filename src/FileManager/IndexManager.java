@@ -25,8 +25,7 @@ public class IndexManager {
      */
     public long regCount()
     {
-        long a=file.length()/REG_SIZE;
-        return a;
+        return file.length()/REG_SIZE;
     }
 
     public IndexManager(File file) {

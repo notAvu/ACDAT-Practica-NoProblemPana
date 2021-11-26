@@ -24,14 +24,11 @@ public class Main { public static void main(String[] args) {
         switch (ans) {
             case "1" -> addPersona(clients, scan, indice);
             case "2" -> {
-                Menu.printInfo(Menu.DNI);
-                String input=scan.next();
                 String dni=askDni(scan);
                 if(indice.getPosition(dni)==-1) {
                     Menu.dniNotFound();
                 }else {
-                    indice.getPosition(input);
-                    System.out.println();
+                    System.out.println(clients.readPerson(indice.getPosition(dni)).toString());
                 }
             }
             case "3" -> {
@@ -39,6 +36,9 @@ public class Main { public static void main(String[] args) {
                 String dni=askDni(scan);
                 if(indice.getPosition(dni)==-1) {
                     Menu.dniNotFound();
+                }else
+                {
+                    //borrarClientes
                 }
             }
             case "4" -> {
@@ -49,7 +49,7 @@ public class Main { public static void main(String[] args) {
                 config.writeString(selected);
                 }
             }
-            case "5" -> clients.export(getFileCharset(config));
+            case "5" -> clients.export(getFileCharset(config.readString()));
             case "0"->exit=true;
         }
     }
@@ -64,12 +64,12 @@ public class Main { public static void main(String[] args) {
      * 4-> UTF_16LE
      * 5-> UTF_16BE
      * 6-> UTF8
-     * @param config
+     * @param charsetChoice
      * @return
      */
-    private static Charset getFileCharset(IndexManager config) {
+    private static Charset getFileCharset(String charsetChoice) {
         Charset encoding;
-        switch (config.readString())
+        switch (charsetChoice)
         {
             case "1"-> encoding=StandardCharsets.US_ASCII;
             case "2"->encoding=StandardCharsets.ISO_8859_1;

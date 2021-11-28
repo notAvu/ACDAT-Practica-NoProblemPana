@@ -65,7 +65,6 @@ public class Main { public static void main(String[] args) {
      * 5-> UTF_16BE
      * 6-> UTF8
      * @param charsetChoice
-     * @return
      */
     private static Charset getFileCharset(String charsetChoice) {
         Charset encoding;
@@ -81,7 +80,9 @@ public class Main { public static void main(String[] args) {
     }
 
     /**
-     * añade un registro con el dni indic
+     * Añade un registro con el dni indice
+     * precondiciones: el dni debe ser valido
+     * poscondiciones: el fihcero debe contener el registro con los datos introducidos
      * @param manager
      * @param dni
      * @param position
@@ -91,6 +92,15 @@ public class Main { public static void main(String[] args) {
         manager.writeNumber(position);
         manager.writeString(dni);
     }
+
+    /**
+     * Guarda los datos de una persona cuyos datos seran introducidos por
+     * precondiciones: se deben haber creado los ficheros de clientManager e indexManager
+     * poscondiciones: el fihcero debe contener el registro con los datos introducidos
+     * @param clientManager
+     * @param scan
+     * @param indexManager
+     */
     private static void addPersona(PersonaManager clientManager, Scanner scan, IndexManager indexManager) {
         String nombre="";
         String apellido="";
@@ -110,13 +120,29 @@ public class Main { public static void main(String[] args) {
         addToIndex(indexManager, dni, nextPosition);
     }
 
+    /**
+     * Establece a una persona como eliminada de los ficheros del programa
+     * Se cambia el dni del registro por uno no valido para determinar que es un registro eliminado
+     *
+     * @param objetivo
+     * @param clientManager
+     * @param indexManager
+     */
     private static void removePersona(Persona objetivo,PersonaManager clientManager, IndexManager indexManager)
     {
         long targetPosition=indexManager.getPosition(objetivo.getDni());
-        Persona persona = new Persona(objetivo.getNombre(), objetivo.getApellidos(), "11111111U", objetivo.getDireccion(), objetivo.getNumTelefono());
-        clientManager.writePerson(persona, targetPosition);
-        addToIndex(indexManager, objetivo.getDni(), targetPosition);
+        if(targetPosition>-1)
+        {
+            Persona persona = new Persona(objetivo.getNombre(), objetivo.getApellidos(), "11111111U", objetivo.getDireccion(), objetivo.getNumTelefono());
+            clientManager.writePerson(persona, targetPosition);
+            addToIndex(indexManager, objetivo.getDni(), targetPosition);
+        }
     }
+
+    /**
+     * Devuelve la siguiente posicion disponible del fichero
+     * @param indexManager
+     */
     private static long getNextPosition(IndexManager indexManager) {
         long nextPosition=0;
         long numRegistros= indexManager.regCount();

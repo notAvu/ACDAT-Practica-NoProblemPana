@@ -6,7 +6,6 @@ import Clases.TlfnValidator;
 import FileManager.IndexManager;
 import FileManager.PersonaManager;
 import Vista.Menu;
-
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
@@ -96,11 +95,7 @@ public class Main {
      * @param indexManager
      */
     private static void addPersona(PersonaManager clientManager, Scanner scan, IndexManager indexManager) {
-        String nombre;
-        String apellido;
-        String dni;
-        String telefono;
-        String direccion;
+        String nombre, apellido, dni, telefono, direccion;
         do {
             nombre = askNombre(scan);
             apellido = askApellido(scan);
@@ -126,18 +121,10 @@ public class Main {
     private static boolean validateFields(String nombre, String apellido, String dni, String telefono, String direccion)
     {
         boolean notEmpty=nombre.equals("") || apellido.equals("") || dni.equals("") || telefono.equals("") || direccion.equals("");
-        if(!notEmpty) {
-            Menu.emptyFields();
-        }
+        if(!notEmpty) Menu.emptyFields();
         boolean tlfnValid= new TlfnValidator(telefono).validate();
-        if(!tlfnValid) {
-            Menu.invalidTelephone();
-        }
         boolean validDni= new DniValidator(dni).validar();
-        if(!validDni){
-            Menu.printInvalidDni();
-        }
-        return notEmpty&&tlfnValid&&validDni;
+        return notEmpty&&validDni&&tlfnValid;
     }
      /**
      * Establece a una persona como eliminada de los ficheros del programa
@@ -149,8 +136,7 @@ public class Main {
     private static void removePersona(Persona objetivo,PersonaManager clientManager, IndexManager indexManager)
     {
         long targetPosition=indexManager.getPosition(objetivo.getDni());
-        if(targetPosition>-1)
-        {
+        if(targetPosition>-1) {
             Persona persona = new Persona(objetivo.getNombre(), objetivo.getApellidos(), "11111111U", objetivo.getDireccion(), objetivo.getNumTelefono());
             clientManager.writePerson(persona, targetPosition);
             addToIndex(indexManager, objetivo.getDni(), targetPosition);
@@ -169,46 +155,34 @@ public class Main {
     }
 
     private static String askDireccion(Scanner scan) {
-        String direccion;
         Menu.printInfo(Menu.DIRECCION);
-        direccion = scan.next();
+        String direccion = scan.next();
         direccion +=scan.nextLine();
         return direccion;
     }
 
 
     private static String askApellido(Scanner scan) {
-        String apellido;
         Menu.printInfo(Menu.APELLIDO);
-        apellido = scan.next();
-        return apellido;
+        return scan.next();
     }
 
     private static String askNombre(Scanner scan) {
-        String nombre;
         Menu.printInfo(Menu.NOMBRE);
-        nombre = scan.next();
-        return nombre;
+        return scan.next();
     }
 
     private static String askTelefono(Scanner scan) {
-        String telefono;
         Menu.printInfo(Menu.TELEFONO);
-        telefono = scan.next();
-//        if(!new TlfnValidator(telefono).validate()) {
-//            Menu.invalidTelephone();
-//        }
+        String telefono = scan.next();
+        if(!new TlfnValidator(telefono).validate()) Menu.invalidTelephone();
         return telefono;
     }
 
     private static String askDni(Scanner scan) {
-        String dni;
         Menu.printInfo(Menu.DNI);
-        dni = scan.next();
-//        DniValidator validator=new DniValidator(dni);
-//        if(!validator.validar()) {
-//            Menu.printInvalidDni();
-//        }
+        String dni = scan.next();
+        if(!new DniValidator(dni).validar()) Menu.printInvalidDni();
         return dni;
     }
 

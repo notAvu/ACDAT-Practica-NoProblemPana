@@ -1,5 +1,6 @@
-package Clases;
+package Tests.Clases;
 
+import Clases.TlfnValidator;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

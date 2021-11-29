@@ -88,7 +88,7 @@ public class Main {
     }
 
     /**
-     * Guarda los datos de una persona cuyos datos seran introducidos por
+     * Guarda los datos de una persona cuyos datos seran introducidos por teclado
      * precondiciones: se deben haber creado los ficheros de clientManager e indexManager
      * poscondiciones: el fihcero debe contener el registro con los datos introducidos
      * @param clientManager
@@ -96,18 +96,18 @@ public class Main {
      * @param indexManager
      */
     private static void addPersona(PersonaManager clientManager, Scanner scan, IndexManager indexManager) {
-        String nombre="";
-        String apellido="";
-        String dni="";
-        String telefono="";
-        String direccion="";
-        while (validateFields(nombre, apellido, dni, telefono, direccion)) {
+        String nombre;
+        String apellido;
+        String dni;
+        String telefono;
+        String direccion;
+        do {
             nombre = askNombre(scan);
             apellido = askApellido(scan);
             dni = askDni(scan);
             telefono = askTelefono(scan);
             direccion = askDireccion(scan);
-        }
+        }while (!validateFields(nombre, apellido, dni, telefono, direccion));
         Persona persona = new Persona(nombre, apellido, dni, direccion, telefono);
         long nextPosition = getNextPosition(indexManager);
         clientManager.writePerson(persona, nextPosition);

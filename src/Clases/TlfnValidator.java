@@ -14,7 +14,7 @@ public class TlfnValidator {
      */
     public boolean validate()
     {
-        return (this.telephoneNumber.length()==9)&&noLetters();
+        return (this.telephoneNumber.length()==NUMBER_SIZE)&&noLetters();
     }
 
     /**
@@ -26,7 +26,7 @@ public class TlfnValidator {
         String auxNumber;
         StringBuilder tlfn = new StringBuilder();
         String[] numbers = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
-        for (i = 0; i < this.telephoneNumber.length(); i++) {
+        for (i = 0; i < this.telephoneNumber.length()-1; i++) {
             auxNumber = this.telephoneNumber.substring(i, i + 1);
             for (j = 0; j < numbers.length; j++) {
                 if (auxNumber.equals(numbers[j])) tlfn.append(numbers[j]);

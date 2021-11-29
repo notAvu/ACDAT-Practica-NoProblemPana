@@ -9,7 +9,7 @@ public class Persona {
     private String dni;
     private String direccion;
     private String numTelefono;
-    private final int NAME_SIZE = 26;
+    private final int NAME_SIZE = 25;
 
     public Persona(String nombre, String apellidos, String dni, String direccion, String numTelefono) {
         setNombre(nombre);

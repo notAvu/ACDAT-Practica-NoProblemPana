@@ -61,8 +61,6 @@ public class Persona {
         this.numTelefono = numTelefono;
     }
 
-
-
     /**
      * metodo para comprobar la validez del dni en funcion de los criterios que determina la cclase DniValidator
      * @return

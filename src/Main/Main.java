@@ -11,36 +11,29 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
-public class Main { public static void main(String[] args) {
+public class Main {
+    public static void main(String[] args) {
     PersonaManager clients= new PersonaManager("Clientes");
     IndexManager indice= new IndexManager("Indice_clientes");
     IndexManager config= new IndexManager("config");
     String ans;
     Scanner scan= new Scanner(System.in);
     boolean exit=false;
-    while(!exit)
-    {
+    while(!exit) {
         Menu.printMenu();
         ans=scan.next();
         switch (ans) {
             case "1" -> addPersona(clients, scan, indice);
             case "2" -> {
                 String dni=askDni(scan);
-                if(indice.getPosition(dni)==-1||!clients.readPerson(indice.getPosition(dni)).validar()) {
-                    Menu.dniNotFound();
-                }else {
-                    System.out.println(clients.readPerson(indice.getPosition(dni)).toString());
-                }
+                if(indice.getPosition(dni)==-1||!clients.readPerson(indice.getPosition(dni)).validar()) Menu.dniNotFound();
+                else System.out.println(clients.readPerson(indice.getPosition(dni)).toString());
             }
             case "3" -> {
                 Menu.printInfo(Menu.DNI);
                 String dni=askDni(scan);
-                if(indice.getPosition(dni)==-1) {
-                    Menu.dniNotFound();
-                }else
-                {
-                    removePersona(clients.readPerson(indice.getPosition(dni)), clients, indice);
-                }
+                if(indice.getPosition(dni)==-1) Menu.dniNotFound();
+                else removePersona(clients.readPerson(indice.getPosition(dni)), clients, indice);
             }
             case "4" -> {
                 String selected="";
@@ -51,7 +44,7 @@ public class Main { public static void main(String[] args) {
                 }
             }
             case "5" -> clients.export(getFileCharset(config.readString()));
-            case "0"->exit=true;
+            case "0"-> exit=true;
         }
     }
 }
@@ -120,6 +113,16 @@ public class Main { public static void main(String[] args) {
         clientManager.writePerson(persona, nextPosition);
         addToIndex(indexManager, dni, nextPosition);
     }
+
+    /**
+     * Metodo para validar el input del usuario asegurando que ninguno de los campos este vacio y que el telefono y el
+     * dni sean validos segun los criterios de sus respectivas clases validadoras
+     * @param nombre
+     * @param apellido
+     * @param dni
+     * @param telefono
+     * @param direccion
+     */
     private static boolean validateFields(String nombre, String apellido, String dni, String telefono, String direccion)
     {
         boolean notEmpty=nombre.equals("") || apellido.equals("") || dni.equals("") || telefono.equals("") || direccion.equals("");
@@ -139,7 +142,6 @@ public class Main { public static void main(String[] args) {
      /**
      * Establece a una persona como eliminada de los ficheros del programa
      * Se cambia el dni del registro por uno no valido para determinar que es un registro eliminado
-     *
      * @param objetivo
      * @param clientManager
      * @param indexManager
@@ -156,13 +158,13 @@ public class Main { public static void main(String[] args) {
     }
 
     /**
-     * Devuelve la siguiente posicion disponible del fichero
+     * Devuelve la siguiente posicion disponible para escritura del fichero
      * @param indexManager
      */
     private static long getNextPosition(IndexManager indexManager) {
         long nextPosition=0;
         long numRegistros= indexManager.regCount();
-        if(numRegistros>0){nextPosition=numRegistros;}
+        if(numRegistros>0) nextPosition = numRegistros;
         return nextPosition;
     }
 
@@ -174,12 +176,6 @@ public class Main { public static void main(String[] args) {
         return direccion;
     }
 
-    private static String askTelefono(Scanner scan) {
-        String telefono;
-        Menu.printInfo(Menu.TELEFONO);
-        telefono = scan.next();
-        return telefono;
-    }
 
     private static String askApellido(Scanner scan) {
         String apellido;
@@ -195,15 +191,24 @@ public class Main { public static void main(String[] args) {
         return nombre;
     }
 
+    private static String askTelefono(Scanner scan) {
+        String telefono;
+        Menu.printInfo(Menu.TELEFONO);
+        telefono = scan.next();
+//        if(!new TlfnValidator(telefono).validate()) {
+//            Menu.invalidTelephone();
+//        }
+        return telefono;
+    }
+
     private static String askDni(Scanner scan) {
         String dni;
         Menu.printInfo(Menu.DNI);
         dni = scan.next();
-        DniValidator validator=new DniValidator(dni);
-        if(!validator.validar()) {
-            Menu.printInvalidDni();
-            dni="";
-        }
+//        DniValidator validator=new DniValidator(dni);
+//        if(!validator.validar()) {
+//            Menu.printInvalidDni();
+//        }
         return dni;
     }
 

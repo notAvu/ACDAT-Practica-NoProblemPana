@@ -1,5 +1,10 @@
 package Clases;
 
+/**
+ * Esta clase se encarga de validar el formato de un dni.
+ * La clase es una ya existente que he adaptado a el proyecto limpiando un poco las partes del codigo mas "Chapuzeras"
+ * y haciendo que cumpla ciertos criterios
+ */
 public class DniValidator {
     private String dni;
     private final int DNI_LENGTH=9;

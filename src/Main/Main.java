@@ -2,6 +2,7 @@ package Main;
 
 import Clases.DniValidator;
 import Clases.Persona;
+import Clases.TlfnValidator;
 import FileManager.IndexManager;
 import FileManager.PersonaManager;
 import Vista.Menu;
@@ -107,7 +108,7 @@ public class Main { public static void main(String[] args) {
         String dni="";
         String telefono="";
         String direccion="";
-        while (nombre.equals("") || apellido.equals("") || dni.equals("") || telefono.equals("")|| direccion.equals("")) {
+        while (validateFields(nombre, apellido, dni, telefono, direccion)) {
             nombre = askNombre(scan);
             apellido = askApellido(scan);
             dni = askDni(scan);
@@ -119,8 +120,23 @@ public class Main { public static void main(String[] args) {
         clientManager.writePerson(persona, nextPosition);
         addToIndex(indexManager, dni, nextPosition);
     }
-
-    /**
+    private static boolean validateFields(String nombre, String apellido, String dni, String telefono, String direccion)
+    {
+        boolean notEmpty=nombre.equals("") || apellido.equals("") || dni.equals("") || telefono.equals("") || direccion.equals("");
+        if(!notEmpty) {
+            Menu.emptyFields();
+        }
+        boolean tlfnValid= new TlfnValidator(telefono).validate();
+        if(!tlfnValid) {
+            Menu.invalidTelephone();
+        }
+        boolean validDni= new DniValidator(dni).validar();
+        if(!validDni){
+            Menu.printInvalidDni();
+        }
+        return notEmpty&&tlfnValid&&validDni;
+    }
+     /**
      * Establece a una persona como eliminada de los ficheros del programa
      * Se cambia el dni del registro por uno no valido para determinar que es un registro eliminado
      *

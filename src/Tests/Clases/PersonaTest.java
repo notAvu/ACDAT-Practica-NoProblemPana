@@ -12,14 +12,14 @@ class PersonaTest {
     Persona pValid=new Persona("Saturnino", "Marquez", "12345678A", "lejos", "617822501");
     Persona pValidCopy=new Persona("Saturnino", "Marquez", "12345678A", "lejos", "617822501");
     Persona pFail=new Persona("Saturnino", "Marquez", "12312678A", "lejos", "0");
-    @Test
-    void validarTlfnTestTrue() {
-        assertTrue(pValid.validarTlfn());
-    }
-    @Test
-    void validarTlfnTestFalse() {
-        assertFalse(pFail.validarTlfn());
-    }
+//    @Test
+//    void validarTlfnTestTrue() {
+//        assertTrue(pValid.validarTlfn());
+//    }
+//    @Test
+//    void validarTlfnTestFalse() {
+//        assertFalse(pFail.validarTlfn());
+//    }
     @Test
     void testEqualsTest() {
         assertEquals(pValid, pValidCopy);

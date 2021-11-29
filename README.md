@@ -1,2 +1,3 @@
 # ACDAT-Practica-NoProblemPana
-Validaciones pibe
+
+Tampoco os lo copieis tal cual, que si no es un poquito sus

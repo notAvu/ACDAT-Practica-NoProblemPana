@@ -72,15 +72,15 @@ public class PersonaManager extends IndexManager{
     public void export(Charset charset)
     {
         int i=0;
-        Persona aux=readPerson(i);
         TextFileManager textFileManager=new TextFileManager(charset);
+        Persona aux=readPerson(i);
         while(!aux.getDni().equals(""))
         {
-            if(aux.validar()) {
-                textFileManager.writeClient(aux);
-            }
+            if(aux.validar()) textFileManager.writeClient(aux);
+            else{
             i++;
             aux=readPerson(i);
+            }
         }
     }
 }

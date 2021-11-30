@@ -14,10 +14,22 @@ public class TextFileManager {
     private BufferedWriter writer;
     private Charset charset;
 
-    public TextFileManager(Charset charset)
-    {
+    public TextFileManager(Charset charset) {
         txtFile=new File("InfoClientesTxt");
+        if(txtFile.exists()) createNewTxtFile();
         this.charset=charset;
+    }
+
+    /**
+     * Metodo auxiliar que borra el fichero de texto ya existente y crea un nuevo fichero de texto con el mismo nombre
+     */
+    private void createNewTxtFile() {
+        try {
+            txtFile.delete();
+            txtFile.createNewFile();
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
     }
 
     /**

@@ -120,11 +120,11 @@ public class Main {
      */
     private static boolean validateFields(String nombre, String apellido, String dni, String telefono, String direccion)
     {
-        boolean notEmpty=nombre.equals("") || apellido.equals("") || dni.equals("") || telefono.equals("") || direccion.equals("");
-        if(!notEmpty) Menu.emptyFields();
+        boolean empty=nombre.equals("") || apellido.equals("") || dni.equals("") || telefono.equals("") || direccion.equals("");
+        if(empty) Menu.emptyFields();
         boolean tlfnValid= new TlfnValidator(telefono).validate();
         boolean validDni= new DniValidator(dni).validar();
-        return notEmpty&&validDni&&tlfnValid;
+        return (!empty)&&validDni&&tlfnValid;
     }
      /**
      * Establece a una persona como eliminada de los ficheros del programa

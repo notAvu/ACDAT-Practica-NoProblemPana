@@ -80,7 +80,7 @@ public class IndexManager {
         try {
             value = randomAccess.readUTF();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("El registro esta vacio");
         }
         return value;
     }

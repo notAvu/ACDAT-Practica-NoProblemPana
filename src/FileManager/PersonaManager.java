@@ -65,6 +65,7 @@ public class PersonaManager extends IndexManager{
     }
     /**
      * Pasa todos los datos del fichero binario a un fichero de texto con la codificación indicada
+     * Cuando se encuentra se marca el dni del objeto persona auxiliar como vacio para salir del bucle
      * Precondiciones: el fichero debe contener al menos un elemento de la clase Person
      * Poscondicones: se debe haber creado el fichero de texto y registrado los cambios en este
      * @param charset
@@ -76,9 +77,11 @@ public class PersonaManager extends IndexManager{
         Persona aux=readPerson(i);
         while(!aux.getDni().equals(""))
         {
-            if(aux.validar()) textFileManager.writeClient(aux);
-            else{
             i++;
+            if(aux.validar()) {
+                textFileManager.writeClient(aux);
+                aux.setDni("");
+            }else{
             aux=readPerson(i);
             }
         }

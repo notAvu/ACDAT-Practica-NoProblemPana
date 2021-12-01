@@ -24,7 +24,7 @@ public class Persona {
     /**
      * Asigna al atrubuto nombre el parametro recibido, pero si es de longitud mayor a el numero de caracteres
      * especificado en la variable NAME_SIZE se recorta para que solo ocupe ese tamaño
-     * @param nombre
+     * @param nombre nombre que se le quiere dar a la persona
      */
     public void setNombre(String nombre) {
         if(nombre.length()<= NAME_SIZE) this.nombre = nombre;
@@ -36,7 +36,7 @@ public class Persona {
     /**
      * Asigna al atrubuto apellidos el parametro recibido, pero si es de longitud mayor a el numero de caracteres
      * especificado en la variable NAME_SIZE se recorta para que solo ocupe ese tamaño
-     * @param apellidos
+     * @param apellidos apellido que se le quiere dar a la persona
      */
     public void setApellidos(String apellidos) {
         if(apellidos.length()<= NAME_SIZE) this.apellidos = apellidos;
@@ -63,9 +63,9 @@ public class Persona {
 
     /**
      * metodo para comprobar la validez del dni en funcion de los criterios que determina la cclase DniValidator
-     * @return
+     * @return boolean en funcion de si el dni es valido o no
      */
-    public boolean validar(){ return new DniValidator(dni).validar();}
+    public boolean validar(){ return new DniValidator(dni).validate();}
 
     @Override
     public String toString() {
@@ -75,7 +75,7 @@ public class Persona {
     /**
      * Determina si el objeto persona es igual o no al que se le pasa por parametro
      * El criterio de igualdad es el dni del objeto persona
-     * @param o (Object)
+     * @param o (Object) objeto a comprar
      */
     @Override
     public boolean equals(Object o) {

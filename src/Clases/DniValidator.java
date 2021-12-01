@@ -14,14 +14,15 @@ public class DniValidator {
     }
 
     /**
-     * valida que el DNI cumpla las características de un DNI real
+     * Valida que el DNI cumpla las características de un DNI real
+     * @return boolean segun la validez del dni de la instancia de esta clase
      */
-    public boolean validar() {
-        String letraMayuscula;
+    public boolean validate() {
+        String mayus;
         boolean valido=false;
         if (dni.length() == DNI_LENGTH && Character.isLetter(this.dni.charAt(8))) {
-            letraMayuscula = (this.dni.substring(8)).toUpperCase();
-            if (soloNumeros() && letraDNI().equals(letraMayuscula)) {
+            mayus = (this.dni.substring(8)).toUpperCase();
+            if (justNumbers() && dniCharacter().equals(mayus)) {
                 valido = true;
             }
         }
@@ -31,33 +32,33 @@ public class DniValidator {
     /**
      * Valida que los 8 primeros caracteres del DNI sean numeros
      */
-    private boolean soloNumeros() {
-        boolean valido=true;
+    private boolean justNumbers() {
+        boolean valid=true;
         int i, j;
-        String numero;
-        String miDNI = "";
-        String[] unoNueve = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
+        String number;
+        StringBuilder myDni = new StringBuilder();
+        String[] oneToNine = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
         for (i = 0; i < this.dni.length() - 1; i++) {
-            numero = this.dni.substring(i, i + 1);
-            for (j = 0; j < unoNueve.length; j++) {
-                if (numero.equals(unoNueve[j])) { miDNI += unoNueve[j];}
+            number = this.dni.substring(i, i + 1);
+            for (j = 0; j < oneToNine.length; j++) {
+                if (number.equals(oneToNine[j])) { myDni.append(oneToNine[j]);}
             }
         }
-        if (miDNI.length() != 8) {
-            valido= false;
+        if (myDni.length() != 8) {
+            valid= false;
         }
-        return valido;
+        return valid;
     }
 
     /**
      * Comprueba que la letra del dni sea una valida y se corresponda con la cadena de numeros del dni
      */
-    private String letraDNI() {
-        int miDNI = Integer.parseInt(this.dni.substring(0, 8));
-        String miLetra;
-        String[] asignacionLetra = {"T", "R", "W", "A", "G", "M", "Y", "F", "P", "D", "X", "B", "N", "J", "Z", "S", "Q", "V", "H", "L", "C", "K", "E"};
-        int resto = miDNI % 23;
-        miLetra = asignacionLetra[resto];
-        return miLetra;
+    private String dniCharacter() {
+        int myDni = Integer.parseInt(this.dni.substring(0, 8));
+        String character;
+        String[] validChars = {"T", "R", "W", "A", "G", "M", "Y", "F", "P", "D", "X", "B", "N", "J", "Z", "S", "Q", "V", "H", "L", "C", "K", "E"};
+        int resto = myDni % 23;
+        character = validChars[resto];
+        return character;
     }
 }

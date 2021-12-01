@@ -20,16 +20,24 @@ public class IndexManager {
     protected RandomAccessFile randomAccess;
 
     /**
-     * Devuelve la posicion del ultimo registro disponible en el fichero
-     * Precondiciones: el fichero debe contener unicamente registros del tipo de la clase
+     * Calcula el numero de registros en base al tamaño de registro definido en la clase
+     * @returns numero de registros
      */
-    public long regCount()
-    {
+    public long regCount() {
         return file.length()/REG_SIZE;
     }
 
     public IndexManager(File file) {
         this.file = file;
+        createRandomAccessFile(file);
+    }
+
+    public IndexManager(String fileName) {
+        this.file= new File(fileName);
+        createRandomAccessFile(new File(fileName));
+    }
+
+    private void createRandomAccessFile(File file) {
         try {
             this.randomAccess = new RandomAccessFile(file, "rw");
         } catch (FileNotFoundException e) {
@@ -37,19 +45,9 @@ public class IndexManager {
         }
     }
 
-    public IndexManager(String fileName) {
-        this.file= new File(fileName);
-        try {
-            this.randomAccess = new RandomAccessFile(new File(fileName), "rw");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
     /**
      * Metodo para facilitar la escritura de cadenas en el fichero. Escribe un string en formato utf-8
-     * poscondiciones: Se debe haber registrado el string en el contenido del fichero
-     * @param string
+     * @param string cadena que se quiere escribir en el fichero
      */
     public void writeString(String string) {
         try {
@@ -60,8 +58,7 @@ public class IndexManager {
     }
     /**
      * Metodo para facilitar la escritura de enteros en el fichero
-     * Poscondiciones: se debe haber registrado el numero en el contenido del fichero
-     * @param num
+     * @param num numero que se quiere escribir en el fichero
      */
     public void writeNumber(long num) {
         try {
@@ -73,66 +70,63 @@ public class IndexManager {
 
     /**
      * Metodo para leer un string del fichero binario
-     * Precondiciones: el fichero debe no estar vacio
+     * @return string leido del fichero
      */
     public String readString() {
-        String value = "";
+        String stringRead = "";
         try {
-            value = randomAccess.readUTF();
+            stringRead = randomAccess.readUTF();
         } catch (IOException e) {
             System.err.println("El registro esta vacio");
         }
-        return value;
+        return stringRead;
     }
 
     /**
-     * Metodo para leer un string del fichero binario
-     * Precondiciones: el fichero debe no estar vacio
-     * @param position
+     * Metodo para leer un long del fichero binario dada la posicion. Si intenta leer mas alla de la longitud del
+     * contenido del fichero, lee el ultimo registro de este
+     * @param position posicionde la que se quiere leer el numero
+     * @return numero leido del fichero
      */
     public long readLong(long position) {
-        long num = 0;
+        long numberRead = 0;
         if(position>=regCount()) {position=regCount();}
         try {
             randomAccess.seek(position*REG_SIZE);
-            num = randomAccess.readLong();
+            numberRead = randomAccess.readLong();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("El registro esta vacio");
         }
-        return num;
+        return numberRead;
     }
 
     /**
-     * Cambia el numero de la posicion de un registro a -1 para denotar que ese registro no existey asi no se reconozca
+     * Cambia el numero de la posicion de un registro a -1 para denotar que ese registro no existe y asi no se reconozca
      * en las busquedas
-     * @param position
+     * @param position posicion del registro que se quiere borrar
      */
-    public void borrarRegistro(long position)
-    {
+    public void borrarRegistro(long position) {
         try {
             randomAccess.seek(position*REG_SIZE);
             randomAccess.writeLong(-1);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("El registro esta vacio");
         }
     }
 
     /**
-     * Permite obtener la posicion asociada a un DNI en el fichero
-     * Precondiciones: el DNI debe ser valido
-     * @param dni
+     * Permite obtener la posicion asociada a un DNI en el fichero indice
+     * @param dni dni de la persona cuya posicion queremos obtener
+     * @return posicion del dni en el fichero indice
      */
-    public long getPosition(String dni)
-    {
+    public long getPosition(String dni) {
         String id;
         long position=-1;
         boolean found=false;
-        for(long i=0 ; i<regCount() && !found; i++)
-        {
+        for(long i=0 ; i<regCount() && !found; i++) {
             i=readLong(i);
             id=readString();
-            if(id.equals(dni))
-            {
+            if(id.equals(dni)) {
                 position=i;
                 found=true;
             }

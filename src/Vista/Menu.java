@@ -1,7 +1,7 @@
 package Vista;
 
 /**
- * Esta clase cumple la funcion de vista en el MVC guardando todos los mensaje que se muestran por pantalla al usuario
+ * Esta clase cumple la funcion de vista en el MVC guardando los mensaje que se muestran por pantalla al usuario
  */
 public class Menu {
     public static final String MAIN_MENU= """

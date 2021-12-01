@@ -12,24 +12,24 @@ class DniValidatorTest {
     @Test
     void testDniValido() {
         validator= new DniValidator("45698213L");
-        assertTrue(validator.validar());
+        assertTrue(validator.validate());
     }
     @Test
     void testLetraInvalida()
     {
         validator= new DniValidator("45698213A");
-        assertFalse(validator.validar());
+        assertFalse(validator.validate());
     }
     @Test
     void testNumCorto()
     {
         validator= new DniValidator("2L");
-        assertFalse(validator.validar());
+        assertFalse(validator.validate());
     }
     @Test
     void testNotNum()
     {
         validator= new DniValidator("ASDQWERFL");
-        assertFalse(validator.validar());
+        assertFalse(validator.validate());
     }
 }

@@ -19,10 +19,9 @@ public class PersonaManager extends IndexManager{
         super(fileName);
     }
     /**
-     * Metodo para escribir todos los atributos de un objeto Persona en el fichero<br/>
-     * Precondiciones: client debe ser un objeto valido de la clase Persona<br/>
-     * Poscondiciones: se deben haber registrado los atributos de la persona en el fichero<br/>
-     * @param client
+     * Escribe en el fichero los datos de un objeto persona en la posicion indicada del fichero
+     * @param client persona con los datos que se quieren introducir en el fichero
+     * @param position posicion del indice en que se quiere empezar a escribir los datos de la persona
      */
     public void writePerson(Persona client, long position)
     {
@@ -42,7 +41,8 @@ public class PersonaManager extends IndexManager{
      * string del registro
      * Precondiciones: el fichero debe contener al menos un registro
      * Poscondiciones: el método devuelve el primer atributo del registro
-     * @param position
+     * @param position posicion desde la que se quiere empezar a leer
+     * @return primer string leida de dicha posicion registro del fichero
      */
     public String readFirst(long position)
     {
@@ -57,7 +57,8 @@ public class PersonaManager extends IndexManager{
      * Lee completamente un objeto de la clase Persona
      * Precondiciones: el fichero debe contener al menos un registro de la clase Persona
      * Poscondiciones: ninguna
-     * @param position
+     * @param position posicion de la persona en el fichero
+     * @return objeto Persona leido de la posicion del fichero
      */
     public Persona readPerson(long position)
     {
@@ -68,7 +69,7 @@ public class PersonaManager extends IndexManager{
      * Cuando se encuentra se marca el dni del objeto persona auxiliar como vacio para salir del bucle
      * Precondiciones: el fichero debe contener al menos un elemento de la clase Person
      * Poscondicones: se debe haber creado el fichero de texto y registrado los cambios en este
-     * @param charset
+     * @param charset la codificacion en la que se desea exportar el contenido del fichero
      */
     public void export(Charset charset)
     {

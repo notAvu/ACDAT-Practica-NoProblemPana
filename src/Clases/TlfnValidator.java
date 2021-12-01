@@ -1,5 +1,8 @@
 package Clases;
 
+/**
+ * Clase auxiliar con los metodos necesarios para comprobar la validez de un string indicado como numero de telefono
+ */
 public class TlfnValidator {
     private static final int NUMBER_SIZE=9;
     private String telephoneNumber;
@@ -10,7 +13,7 @@ public class TlfnValidator {
 
     /**
      * Determina que el string introducido sea de longitud menor a 9
-     * @return
+     * @return boolean numeroValido
      */
     public boolean validate()
     {

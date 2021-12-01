@@ -58,7 +58,8 @@ public class Main {
      * 4-> UTF_16LE
      * 5-> UTF_16BE
      * 6-> UTF8
-     * @param charsetChoice
+     * @param charsetChoice numero correspondinte a la eleccion del usuario en el menu
+     * @return Charset en el que se exportara el contenido del fichero binario al pasarlo a texto
      */
     private static Charset getFileCharset(String charsetChoice) {
         Charset encoding;
@@ -73,28 +74,12 @@ public class Main {
         return encoding;
     }
 
-    /**
-     * Añade un registro con el dni indice
-     * precondiciones: el dni debe ser valido
-     * poscondiciones: el fihcero debe contener el registro con los datos introducidos
-     * @param manager
-     * @param dni
-     * @param position
-     */
-    private static void addToIndex(IndexManager manager,String dni, long position)
+    private static void writeToIndex(IndexManager manager, String dni, long position)
     {
         manager.writeNumber(position);
         manager.writeString(dni);
     }
 
-    /**
-     * Guarda los datos de una persona cuyos datos seran introducidos por teclado
-     * precondiciones: se deben haber creado los ficheros de clientManager e indexManager
-     * poscondiciones: el fihcero debe contener el registro con los datos introducidos
-     * @param clientManager
-     * @param scan
-     * @param indexManager
-     */
     private static void addPersona(PersonaManager clientManager, Scanner scan, IndexManager indexManager) {
         String nombre, apellido, dni, telefono, direccion;
         do {
@@ -105,34 +90,26 @@ public class Main {
             direccion = askDireccion(scan);
         }while (!validateFields(nombre, apellido, dni, telefono, direccion));
         Persona persona = new Persona(nombre, apellido, dni, direccion, telefono);
-        long nextPosition = getNextPosition(indexManager);
+        long nextPosition = getNextAvailablePosition(indexManager);
         clientManager.writePerson(persona, nextPosition);
-        addToIndex(indexManager, dni, nextPosition);
+        writeToIndex(indexManager, dni, nextPosition);
     }
 
     /**
-     * Metodo para validar el input del usuario asegurando que ninguno de los campos este vacio y que el telefono y el
+     * Metodo auxiliar para validar el input del usuario asegurando que ninguno de los campos este vacio y que el telefono y el
      * dni sean validos segun los criterios de sus respectivas clases validadoras
-     * @param nombre
-     * @param apellido
-     * @param dni
-     * @param telefono
-     * @param direccion
      */
     private static boolean validateFields(String nombre, String apellido, String dni, String telefono, String direccion)
     {
         boolean empty=nombre.equals("") || apellido.equals("") || dni.equals("") || telefono.equals("") || direccion.equals("");
         if(empty) Menu.emptyFields();
         boolean tlfnValid= new TlfnValidator(telefono).validate();
-        boolean validDni= new DniValidator(dni).validar();
+        boolean validDni= new DniValidator(dni).validate();
         return (!empty)&&validDni&&tlfnValid;
     }
      /**
      * Establece a una persona como eliminada de los ficheros del programa
      * Se cambia el dni del registro por uno no valido para determinar que es un registro eliminado
-     * @param objetivo
-     * @param clientManager
-     * @param indexManager
      */
     private static void removePersona(Persona objetivo,PersonaManager clientManager, IndexManager indexManager)
     {
@@ -140,15 +117,11 @@ public class Main {
         if(targetPosition>-1) {
             Persona persona = new Persona(objetivo.getNombre(), objetivo.getApellidos(), "11111111U", objetivo.getDireccion(), objetivo.getNumTelefono());
             clientManager.writePerson(persona, targetPosition);
-            addToIndex(indexManager, objetivo.getDni(), targetPosition);
+            writeToIndex(indexManager, objetivo.getDni(), targetPosition);
         }
     }
 
-    /**
-     * Devuelve la siguiente posicion disponible para escritura del fichero
-     * @param indexManager
-     */
-    private static long getNextPosition(IndexManager indexManager) {
+    private static long getNextAvailablePosition(IndexManager indexManager) {
         long nextPosition=0;
         long numRegistros= indexManager.regCount();
         if(numRegistros>0) nextPosition = numRegistros;
@@ -183,7 +156,7 @@ public class Main {
     private static String askDni(Scanner scan) {
         Menu.printInfo(Menu.DNI);
         String dni = scan.next();
-        if(!new DniValidator(dni).validar()) Menu.printInvalidDni();
+        if(!new DniValidator(dni).validate()) Menu.printInvalidDni();
         return dni;
     }
 

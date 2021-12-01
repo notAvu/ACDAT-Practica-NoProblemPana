@@ -12,9 +12,18 @@ import java.nio.charset.Charset;
  */
 public class PersonaManager extends IndexManager{
     private static final int REG_SIZE=214;
+
+    /**
+     * Constructor de PersonaManager
+     * @param file fichero en el que se quiere escribir
+     */
     public PersonaManager(File file) {
         super(file);
     }
+    /**
+     * Constructor de PersonaManager
+     * @param fileName nombre del fichero en el que se quiere escribir
+     */
     public PersonaManager(String fileName){
         super(fileName);
     }

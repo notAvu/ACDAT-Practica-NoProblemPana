@@ -2,6 +2,9 @@ package Clases;
 
 import java.util.Objects;
 
+/**
+ * Clase que representa los datos de una persona
+ */
 public class Persona {
 
     private String nombre;
@@ -42,21 +45,43 @@ public class Persona {
         if(apellidos.length()<= NAME_SIZE) this.apellidos = apellidos;
         else this.apellidos=apellidos.substring(0, NAME_SIZE);
     }
+
+    /**
+     * Getter de dni
+     * @return dni
+     */
     public String getDni() {
         return dni;
     }
+    /**
+     * Setter de dni
+     * @param dni valor que se quiere dar al dni del objeto
+     */
     public void setDni(String dni) {
         this.dni = dni;
     }
     public String getDireccion() {
         return direccion;
     }
+    /**
+     * Setter de direccion
+     * @param direccion valor que se quiere dar a la direccion del objeto
+     */
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
+
+    /**
+     * Getter de numTelefono
+     * @return numTelefono
+     */
     public String getNumTelefono() {
         return numTelefono;
     }
+    /**
+     * Setter de numtelefono
+     * @param numTelefono valor que se quiere dar al telefono del objeto
+     */
     public void setNumTelefono(String numTelefono) {
         this.numTelefono = numTelefono;
     }

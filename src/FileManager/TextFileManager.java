@@ -14,6 +14,10 @@ public class TextFileManager {
     private BufferedWriter writer;
     private Charset charset;
 
+    /**
+     * constructor de la clase TxtFileManager
+     * @param charset codificacion del fichero de texto que se va a crear
+     */
     public TextFileManager(Charset charset) {
         txtFile=new File("InfoClientesTxt");
         if(txtFile.exists()) createNewTxtFile();

@@ -21,17 +21,24 @@ public class IndexManager {
 
     /**
      * Calcula el numero de registros en base al tamaño de registro definido en la clase
-     * @returns numero de registros
+     * @return long numero de registros
      */
     public long regCount() {
         return file.length()/REG_SIZE;
     }
 
+    /**
+     * Constructor
+     * @param file fichero en el que se va a escribir
+     */
     public IndexManager(File file) {
         this.file = file;
         createRandomAccessFile(file);
     }
-
+    /**
+     * Constructor
+     * @param fileName nombre del fichero en el que se va a escribir
+     */
     public IndexManager(String fileName) {
         this.file= new File(fileName);
         createRandomAccessFile(new File(fileName));

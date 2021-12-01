@@ -9,6 +9,10 @@ public class DniValidator {
     private String dni;
     private final int DNI_LENGTH=9;
 
+    /**
+     * Constructor de la clase, recibe un dni que sera el que se valide
+     * @param inputDni dni a validar
+     */
     public DniValidator(String inputDni) {
         this.dni = inputDni;
     }

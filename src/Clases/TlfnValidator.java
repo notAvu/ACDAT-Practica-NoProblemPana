@@ -7,6 +7,10 @@ public class TlfnValidator {
     private static final int NUMBER_SIZE=9;
     private String telephoneNumber;
 
+    /**
+     * Constructor. La clase validara el telefono introducido por parametro
+     * @param telephoneNumber telefono a validar
+     */
     public TlfnValidator(String telephoneNumber) {
         this.telephoneNumber = telephoneNumber;
     }

@@ -47,7 +47,7 @@ public class TextFileManager {
      * Escribe los datos de un cliente dado en el fichero de texto
      * Precondiciones: client debe no ser null
      * Poscondiciones: se debe haber registrado al cliente en el fichero de texto
-     * @param client
+     * @param client cliente a escribir en el fichero txt
      */
     public void writeClient(Persona client)
     {

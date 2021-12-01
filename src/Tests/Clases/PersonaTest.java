@@ -10,16 +10,6 @@ class PersonaTest {
 
     //No testeare el metodo validar ya que simplemente hace una llamada a los metodos de validacion que
     // ya han sido testeados en su corresopondiente clase
-
-//    @Test
-//    void validarTlfnTestTrue() {
-//        assertTrue(pValid.validarTlfn());
-//    }
-//    @Test
-//    void validarTlfnTestFalse() {
-//        assertFalse(pFail.validarTlfn());
-//    }
-
     static Persona pValid;
     static Persona pValidCopy;
     static Persona pFail;
